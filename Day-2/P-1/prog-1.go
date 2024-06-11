@@ -1,21 +1,40 @@
+// 1. Implement a parameter interface
 package main
 
 import (
 	"fmt"
-	"time"
+	"math"
 )
 
-func say(s string) {
-	for i := 0; i < 5; i++ {
-		time.Sleep(200 * time.Millisecond)
-		fmt.Println(s)
-	}
+type Abser interface {
+	Abs() float64
 }
 
 func main() {
-	go say("function prog")
-	for i := 0; i < 5; i++ {
-		time.Sleep(200 * time.Millisecond)
-		fmt.Println("main program")
+	var a Abser
+	f := MyFloat(-math.Sqrt2)
+	v := Vertex{3, 4}
+
+	a = f  
+	a = &v
+
+
+	fmt.Println(a.Abs())
+}
+
+type MyFloat float64
+
+func (f MyFloat) Abs() float64 {
+	if f < 0 {
+		return float64(-f)
 	}
+	return float64(f)
+}
+
+type Vertex struct {
+	X, Y float64
+}
+
+func (v *Vertex) Abs() float64 {
+	return math.Sqrt(v.X*v.X + v.Y*v.Y)
 }

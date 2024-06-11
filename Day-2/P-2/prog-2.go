@@ -1,22 +1,20 @@
+//2. Implement a greeting message using a channel
+
 package main
 
-import "fmt"
-
-func sum(s []int, c chan int) {
-	sum := 0
-	for _, v := range s {
-		sum += v
-	}
-	c <- sum // send sum to c
-}
+import (
+	"fmt"
+)
 
 func main() {
-	s := []int{7, 2, 8, -9, 4, 0}
+	greetingChannel := make(chan string)
 
-	c := make(chan int)
-	go sum(s[:len(s)/2], c)
-	go sum(s[len(s)/2:], c)
-	x, y := <-c, <-c // receive from c
+	go func() {
+		greeting := "Hello, Go!"
+		greetingChannel <- greeting 
+	}()
 
-	fmt.Println(x, y, x+y)
+	message := <-greetingChannel
+
+	fmt.Println(message)
 }

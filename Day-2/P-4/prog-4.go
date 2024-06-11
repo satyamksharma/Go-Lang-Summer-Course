@@ -1,28 +1,37 @@
+// 4. Multiplexing - Write code to send data from one channel to another
+
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
-func fibonacci(c, quit chan int) {
-	x, y := 0, 1
-	for {
-		select {
-		case c <- x:
-			x, y = y, x+y
-		case <-quit:
-			fmt.Println("quit")
-			return
-		}
+func sendData(src chan int) {
+	for i := 1; i <= 5; i++ {
+		src <- i
+		time.Sleep(time.Second) 
 	}
+	close(src)
+}
+
+func forwardData(src, dst chan int) {
+	for data := range src {
+		dst <- data
+	}
+	close(dst)
 }
 
 func main() {
-	c := make(chan int)
-	quit := make(chan int)
-	go func() {
-		for i := 0; i < 10; i++ {
-			fmt.Println(<-c)
-		}
-		quit <- 0
-	}()
-	fibonacci(c, quit)
+	src := make(chan int)
+	dst := make(chan int)
+
+	go sendData(src)
+	go forwardData(src, dst)
+
+	for data := range dst {
+		fmt.Println(data)
+	}
+
+	fmt.Println("All data forwarded and printed")
 }

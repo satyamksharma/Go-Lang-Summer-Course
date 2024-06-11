@@ -1,22 +1,25 @@
+// 3. Write code to demonstrate go routines
+
 package main
 
 import (
 	"fmt"
+	"time"
 )
 
-func fibonacci(n int, c chan int) {
-	x, y := 0, 1
-	for i := 0; i < n; i++ {
-		c <- x
-		x, y = y, x+y
+func printMessage(msg string) {
+	for i := 0; i < 5; i++ {
+		fmt.Println(msg)
+		time.Sleep(5 * time.Second ) 
 	}
-	close(c)
 }
 
 func main() {
-	c := make(chan int, 10)
-	go fibonacci(cap(c), c)
-	for i := range c {
-		fmt.Println(i)
-	}
+	go printMessage("Hello from goroutine 1")
+	go printMessage("Hello from goroutine 2")
+	go printMessage("Hello from goroutine 3")
+
+	time.Sleep(time.Second * 3)
+	
+	fmt.Println("All goroutines finished")
 }

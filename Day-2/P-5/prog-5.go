@@ -1,23 +1,26 @@
+// 5. Using interface find the area of a triangle
 package main
 
 import (
 	"fmt"
-	"time"
 )
 
+type Shape interface {
+	Area() float64
+}
+
+type Triangle struct {
+	Base, Height float64
+}
+
+func (t Triangle) Area() float64 {
+	return 0.5 * t.Base * t.Height
+}
+
 func main() {
-	tick := time.Tick(100 * time.Millisecond)
-	boom := time.After(500 * time.Millisecond)
-	for {
-		select {
-		case <-tick:
-			fmt.Println("tick.")
-		case <-boom:
-			fmt.Println("BOOM!")
-			return
-		default:
-			fmt.Println("    .")
-			time.Sleep(50 * time.Millisecond)
-		}
-	}
+	triangle := Triangle{Base: 5, Height: 10}
+
+	var shape Shape = triangle
+
+	fmt.Printf("The area of the triangle is: %.2f\n", shape.Area())
 }
