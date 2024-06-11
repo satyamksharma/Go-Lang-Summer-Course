@@ -10,7 +10,7 @@ import (
 func printMessage(msg string) {
 	for i := 0; i < 5; i++ {
 		fmt.Println(msg)
-		time.Sleep(5 * time.Second ) 
+		time.Sleep(3 * time.Second ) 
 	}
 }
 

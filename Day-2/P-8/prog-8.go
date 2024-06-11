@@ -6,14 +6,22 @@ import (
 	"fmt"
 )
 
-func countCharacters(s string) int {
-	return len(s)
+type Counter interface {
+	Count() int
+}
+
+type StringCounter struct {
+	Text string
+}
+
+func (sc StringCounter) Count() int {
+	return len(sc.Text)
 }
 
 func main() {
-	str := "Go Summer Course"
+	input := StringCounter{Text: "Hello, Go!"}
 
-	charCount := countCharacters(str)
+	var counter Counter = input
 
-	fmt.Printf("The no. of chars in \"%s\" is: %d\n", str, charCount)
+	fmt.Printf("The number of characters in the string is: %d\n", counter.Count())
 }

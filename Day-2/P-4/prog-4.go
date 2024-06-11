@@ -15,7 +15,7 @@ func sendData(src chan int) {
 	close(src)
 }
 
-func forwardData(src, dst chan int) {
+func readData(src, dst chan int) {
 	for data := range src {
 		dst <- data
 	}
@@ -27,7 +27,7 @@ func main() {
 	dst := make(chan int)
 
 	go sendData(src)
-	go forwardData(src, dst)
+	go readData(src, dst)
 
 	for data := range dst {
 		fmt.Println(data)
