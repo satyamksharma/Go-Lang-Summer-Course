@@ -19,7 +19,7 @@ func (sc StringCounter) Count() int {
 }
 
 func main() {
-	input := StringCounter{Text: "Hello, Go!"}
+	input := StringCounter{Text: "Go Summer Course"}
 
 	var counter Counter = input
 

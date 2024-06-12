@@ -6,12 +6,12 @@ import (
 	"math"
 )
 
-type Abser interface {
+type Absol interface {
 	Abs() float64
 }
 
 func main() {
-	var a Abser
+	var a Absol
 	f := MyFloat(-math.Sqrt2)
 	v := Vertex{3, 4}
 
