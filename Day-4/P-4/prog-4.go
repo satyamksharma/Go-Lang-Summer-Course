@@ -1,5 +1,5 @@
 /*IV. Create a string "Go programming" and a string "GoLang".
-  1. Perform copy and find valueOf (reflection methods)
+1. Perform copy and find valueOf (reflection methods)
 */
 
 package main

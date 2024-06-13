@@ -31,8 +31,9 @@ func main() {
 	floatSlice := []float64{1.1, 2.2, 3.3, 4.4, 5.5}
 	stringSlice := []string{"a", "b", "c", "d", "e"}
 
-	fmt.Println("Are intSlice and intSlice equal?", reflect.DeepEqual(intSlice, intSlice))
+	fmt.Println("Are intSlice and stringSlice equal?", reflect.DeepEqual(intSlice, stringSlice))
 	fmt.Println("Are intSlice and floatSlice equal?", reflect.DeepEqual(intSlice, floatSlice))
+	fmt.Println("Are floatSlice and stringSlice equal?", reflect.DeepEqual(floatSlice, stringSlice))
 
 	fmt.Printf("Size of intSlice: %d bytes\n", unsafe.Sizeof(intSlice))
 	fmt.Printf("Size of floatSlice: %d bytes\n", unsafe.Sizeof(floatSlice))
