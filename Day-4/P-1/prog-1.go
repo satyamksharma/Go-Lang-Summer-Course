@@ -13,30 +13,39 @@ import (
 	"unsafe"
 )
 
-func reverseSlice(slice []int) []int {
-    for i, j := 0, len(slice)-1; i < j; i, j = i+1, j-1 {
-        slice[i], slice[j] = slice[j], slice[i]
-    }
-    return slice
+func Reverse(slice interface{}) {
+	value := reflect.ValueOf(slice)
+	if value.Kind() != reflect.Slice {
+		panic("Reverse: not a slice")
+	}
+
+	length := value.Len()
+	swap := reflect.Swapper(slice)
+	for i := 0; i < length/2; i++ {
+		swap(i, length-i-1)
+	}
 }
 
 func main() {
-    arrayInt := [5]int{1, 2, 3, 4, 5}
-    slice1 := []int{1, 2, 3, 4, 5}
-    slice2 := []int{1, 2, 3, 4, 6}
-    sliceString := []string{"one", "two", "three"}
+	intSlice := []int{1, 2, 3, 4, 5}
+	floatSlice := []float64{1.1, 2.2, 3.3, 4.4, 5.5}
+	stringSlice := []string{"a", "b", "c", "d", "e"}
 
-    fmt.Println("Slices equal (sliceInt1, sliceInt2):", reflect.DeepEqual(slice1, slice2))
-    fmt.Println("Slices equal (sliceInt1, sliceInt1):", reflect.DeepEqual(slice1, slice1))
+	fmt.Println("Are intSlice and intSlice equal?", reflect.DeepEqual(intSlice, intSlice))
+	fmt.Println("Are intSlice and floatSlice equal?", reflect.DeepEqual(intSlice, floatSlice))
 
-    fmt.Printf("Size of sliceInt1: %d bytes\n", unsafe.Sizeof(slice1))
-    fmt.Printf("Size of sliceString: %d bytes\n", unsafe.Sizeof(sliceString))
+	fmt.Printf("Size of intSlice: %d bytes\n", unsafe.Sizeof(intSlice))
+	fmt.Printf("Size of floatSlice: %d bytes\n", unsafe.Sizeof(floatSlice))
+	fmt.Printf("Size of stringSlice: %d bytes\n", unsafe.Sizeof(stringSlice))
 
-    fmt.Printf("Number of elements in arrayInt: %d\n", len(arrayInt))
-    fmt.Printf("Number of elements in sliceInt1: %d\n", len(slice1))
-    fmt.Printf("Number of elements in sliceString: %d\n", len(sliceString))
+	fmt.Printf("Number of elements in intSlice: %d\n", len(intSlice))
+	fmt.Printf("Number of elements in floatSlice: %d\n", len(floatSlice))
+	fmt.Printf("Number of elements in stringSlice: %d\n", len(stringSlice))
 
-    reversedSlice := reverseSlice(slice1)
-    fmt.Println("Reversed sliceInt1:", reversedSlice)
+	Reverse(intSlice)
+	Reverse(floatSlice)
+	Reverse(stringSlice)
+	fmt.Println("Reversed intSlice:", intSlice)
+	fmt.Println("Reversed floatSlice:", floatSlice)
+	fmt.Println("Reversed stringSlice:", stringSlice)
 }
-
